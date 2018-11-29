@@ -27,8 +27,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Add all other hosts for environment
   master.vm.provision :hosts do |entries|
     entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
-    entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
+    entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
+    entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
+    entries.add_host '10.10.100.112', ['trusty.puppetlabs.vm', 'trusty']
+    entries.add_host '10.10.100.113', ['xenial.puppetlabs.vm', 'xenial']
   end
 
   # Set the PE Role for this node
@@ -40,62 +42,130 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 ################
+## CentOS6 VM ##
+################
+  # Define the CentOS6 VM Characteristics
+  config.vm.define 'centos6' do |centos6|
+    centos6.vm.box = 'centos/6'
+    centos6.vm.network :private_network, :ip => '10.10.100.110'
+    centos6.vm.hostname = 'centos6.puppetlabs.vm'
+
+  # Configure CentOS6 VM Settings
+  centos6.vm.provider :virtualbox do |settings|
+    settings.memory = 1024
+    settings.name   = "c6_ossec_pe2019.0.0"
+    settings.cpus   = 1
+  end
+
+  # Add all other hosts for environment
+  centos6.vm.provision :hosts do |entries|
+    entries.add_host '10.10.100.100', ['master.puppetlabs.vm',  'master' ]
+    entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
+    entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
+    entries.add_host '10.10.100.112', ['trusty.puppetlabs.vm',  'trusty' ]
+    entries.add_host '10.10.100.113', ['xenial.puppetlabs.vm',  'xenial' ]
+  end
+
+  # Set the PE Role of This Node
+  centos6.vm.provision :pe_agent do |provisioner|
+    provisioner.master = 'master.puppetlabs.vm'
+  end
+    centos6.vm.provision :shell, path: "provision/centos6.sh"
+  end
+
+################
 ## CentOS7 VM ##
 ################
-  # Define the Development VM Characteristics
+  # Define the CentOS7 VM Characteristics
   config.vm.define 'centos7' do |centos7|
     centos7.vm.box = 'centos/7'
-    centos7.vm.network :private_network, :ip => '10.10.100.110'
-    centos7.vm.hostname = 'centos.puppetlabs.vm'
+    centos7.vm.network :private_network, :ip => '10.10.100.111'
+    centos7.vm.hostname = 'centos7.puppetlabs.vm'
 
-  # Configure CentOS VM Settings
+  # Configure CentOS7 VM Settings
   centos7.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name = "centos_2019.0.0"
-    settings.cpus = 1
+    settings.name   = "c7_ossec_pe2019.0.0"
+    settings.cpus   = 1
   end
 
   # Add all other hosts for environment
   centos7.vm.provision :hosts do |entries|
-    entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
-    entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
+    entries.add_host '10.10.100.100', ['master.puppetlabs.vm',  'master' ]
+    entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
+    entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
+    entries.add_host '10.10.100.112', ['trusty.puppetlabs.vm',  'trusty' ]
+    entries.add_host '10.10.100.113', ['xenial.puppetlabs.vm',  'xenial' ]
   end
 
   # Set the PE Role of This Node
   centos7.vm.provision :pe_agent do |provisioner|
     provisioner.master = 'master.puppetlabs.vm'
   end
-    centos.vm.provision :shell, path: "provision/centos7.sh"
+    centos7.vm.provision :shell, path: "provision/centos7.sh"
   end
 
 ###############
-## Ubuntu VM ##
+## Trusty VM ##
 ###############
-  # Define the Ubuntu VM Characteristics
-  config.vm.define 'ubuntu' do |ubuntu|
-    ubuntu.vm.box = 'ubuntu/xenial64'
-    ubuntu.vm.network :private_network, :ip => '10.10.100.111'
-    ubuntu.vm.hostname = 'ubuntu.puppetlabs.vm'
+  # Define the Trusty 14.04 VM Characteristics
+  config.vm.define 'trusty' do |trusty|
+    trusty.vm.box = 'ubuntu/trusty64'
+    trusty.vm.network :private_network, :ip => '10.10.100.112'
+    trusty.vm.hostname = 'trusty.puppetlabs.vm'
 
-  # Configure Ubuntu VM Settings
-  ubuntu.vm.provider :virtualbox do |settings|
+  # Configure Trusty VM Settings
+  trusty.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name = "ubuntu_2019.0.0"
+    settings.name = "trusty_ossec_pe2019.0.0"
     settings.cpus = 1
   end
 
   # Add all other hosts for environment
-  ubuntu.vm.provision :hosts do |entries|
-    entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
-    entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
+  trusty.vm.provision :hosts do |entries|
+    entries.add_host '10.10.100.100', ['master.puppetlabs.vm',  'master' ]
+    entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
+    entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
+    entries.add_host '10.10.100.112', ['trusty.puppetlabs.vm',  'trusty' ]
+    entries.add_host '10.10.100.113', ['xenial.puppetlabs.vm',  'xenial' ]
   end
 
   # Set the PE Role of This Node
-  ubuntu.vm.provision :pe_agent do |provisioner|
+  trusty.vm.provision :pe_agent do |provisioner|
     provisioner.master = 'master.puppetlabs.vm'
   end
-    ubuntu.vm.provision :shell, path: "provision/ubuntu.sh"
+    trusty.vm.provision :shell, path: "provision/trusty.sh"
+  end
+
+###############
+## Xenial VM ##
+###############
+  # Define the Xenial 16.04 VM Characteristics
+  config.vm.define 'xenial' do |xenial|
+    xenial.vm.box = 'ubuntu/xenial64'
+    xenial.vm.network :private_network, :ip => '10.10.100.113'
+    xenial.vm.hostname = 'xenial.puppetlabs.vm'
+
+  # Configure Xenial VM Settings
+  xenial.vm.provision :hosts do |settings|
+    settings.memory = 1024
+    settings.name   = "xenial_ossec_pe2019.0.0"
+    settings.cpu    = 1
+  end
+
+  # Add all other hosts for environment
+  trusty.vm.provision :hosts do |entries|
+    entries.add_host '10.10.100.100', ['master.puppetlabs.vm',  'master' ]
+    entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
+    entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
+    entries.add_host '10.10.100.112', ['trusty.puppetlabs.vm',  'trusty' ]
+    entries.add_host '10.10.100.113', ['xenial.puppetlabs.vm',  'xenial' ]
+  end
+
+  # Set the PE Role of This Node
+  xenial.vm.provision :pe_agent do |provisioner|
+    provisioner.master = 'master.puppetlabs.vm'
+  end
+    xenial.vm.provision :shell, path: "provision/xenial.sh"
   end
 end
