@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ######################
   # Define the Master VM Characteristics
   config.vm.define 'master' do |master|
-    master.vm.box = 'puppetlabs/centos-7.2-64-nocm'
+    master.vm.box = 'centos/7'
     master.vm.network :private_network, :ip => '10.10.100.100'
     master.vm.network "forwarded_port", guest: 443, host: 8443
     master.vm.hostname = 'master.puppetlabs.vm'
@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Add all other hosts for environment
   master.vm.provision :hosts do |entries|
     entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos.puppetlabs.vm', 'centos']
+    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
     entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
   end
 
@@ -39,34 +39,34 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     master.vm.provision :shell, path: "provision/master.sh"
   end
 
-###############
-## CentOS VM ##
-###############
+################
+## CentOS7 VM ##
+################
   # Define the Development VM Characteristics
-  config.vm.define 'centos' do |centos|
-    centos.vm.box = 'puppetlabs/centos-7.2-64-nocm'
-    centos.vm.network :private_network, :ip => '10.10.100.110'
-    centos.vm.hostname = 'centos.puppetlabs.vm'
+  config.vm.define 'centos7' do |centos7|
+    centos7.vm.box = 'centos/7'
+    centos7.vm.network :private_network, :ip => '10.10.100.110'
+    centos7.vm.hostname = 'centos.puppetlabs.vm'
 
   # Configure CentOS VM Settings
-  centos.vm.provider :virtualbox do |settings|
+  centos7.vm.provider :virtualbox do |settings|
     settings.memory = 1024
     settings.name = "centos_2019.0.0"
     settings.cpus = 1
   end
 
   # Add all other hosts for environment
-  centos.vm.provision :hosts do |entries|
+  centos7.vm.provision :hosts do |entries|
     entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos.puppetlabs.vm', 'centos']
+    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
     entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
   end
 
   # Set the PE Role of This Node
-  centos.vm.provision :pe_agent do |provisioner|
+  centos7.vm.provision :pe_agent do |provisioner|
     provisioner.master = 'master.puppetlabs.vm'
   end
-    centos.vm.provision :shell, path: "provision/centos.sh"
+    centos.vm.provision :shell, path: "provision/centos7.sh"
   end
 
 ###############
@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ###############
   # Define the Ubuntu VM Characteristics
   config.vm.define 'ubuntu' do |ubuntu|
-    ubuntu.vm.box = 'puppetlabs/ubuntu-16.04-64-nocm'
+    ubuntu.vm.box = 'ubuntu/xenial64'
     ubuntu.vm.network :private_network, :ip => '10.10.100.111'
     ubuntu.vm.hostname = 'ubuntu.puppetlabs.vm'
 
@@ -88,7 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Add all other hosts for environment
   ubuntu.vm.provision :hosts do |entries|
     entries.add_host '10.10.100.100', ['master.puppetlabs.vm', 'master']
-    entries.add_host '10.10.100.110', ['centos.puppetlabs.vm', 'centos']
+    entries.add_host '10.10.100.110', ['centos7.puppetlabs.vm', 'centos7']
     entries.add_host '10.10.100.111', ['ubuntu.puppetlabs.vm', 'ubuntu']
   end
 
