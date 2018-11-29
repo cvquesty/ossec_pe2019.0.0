@@ -53,8 +53,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure CentOS6 VM Settings
   centos6.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name   = "c6_ossec_pe2019.0.0"
-    settings.cpus   = 1
+    settings.name = "c6_ossec_pe2019.0.0"
+    settings.cpus = 1
   end
 
   # Add all other hosts for environment
@@ -85,8 +85,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure CentOS7 VM Settings
   centos7.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name   = "c7_ossec_pe2019.0.0"
-    settings.cpus   = 1
+    settings.name = "c7_ossec_pe2019.0.0"
+    settings.cpus = 1
   end
 
   # Add all other hosts for environment
@@ -154,7 +154,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Add all other hosts for environment
-  trusty.vm.provision :hosts do |entries|
+  xenial.vm.provision :hosts do |entries|
     entries.add_host '10.10.100.100', ['master.puppetlabs.vm',  'master' ]
     entries.add_host '10.10.100.110', ['centos6.puppetlabs.vm', 'centos6']
     entries.add_host '10.10.100.111', ['centos7.puppetlabs.vm', 'centos7']
