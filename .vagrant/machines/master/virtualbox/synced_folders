@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/Users/jsheetsjr/Dropbox/Jerald/Projects/Vagrant/Puppet/OSSEC_Project/ossec_pe2019.0.0","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

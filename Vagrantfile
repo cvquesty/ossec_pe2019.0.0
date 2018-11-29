@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  pe_version                    = '2019.0.0'
+  pe_version                    = '2019.0.1'
   config.pe_build.version       = pe_version
 
 ######################
@@ -12,16 +12,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ######################
   # Define the Master VM Characteristics
   config.vm.define 'master' do |master|
-    master.vm.box = 'centos/7'
-    master.vm.network :private_network, :ip => '10.10.100.100'
-    master.vm.network "forwarded_port", guest: 443, host: 8443
+    master.vm.box      = 'centos/7'
+    master.vm.network  :private_network, :ip => '10.10.100.100'
+    master.vm.network  "forwarded_port", guest: 443, host: 8443
     master.vm.hostname = 'master.puppetlabs.vm'
 
   # Configure Master VM Settings
   master.vm.provider :virtualbox do |settings|
     settings.memory = 4608
-    settings.name = "master_2019.0.0"
-    settings.cpus = 2
+    settings.name   = "master_2019.0.0"
+    settings.cpus   = 2
   end
 
   # Add all other hosts for environment
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Set the PE Role for this node
   master.vm.provision :pe_bootstrap do |provisioner|
-    provisioner.role = :master
+    provisioner.role        = :master
     provisioner.answer_file = 'provision/pe.conf'
   end
     master.vm.provision :shell, path: "provision/master.sh"
@@ -46,15 +46,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ################
   # Define the CentOS6 VM Characteristics
   config.vm.define 'centos6' do |centos6|
-    centos6.vm.box = 'centos/6'
-    centos6.vm.network :private_network, :ip => '10.10.100.110'
+    centos6.vm.box      = 'centos/6'
+    centos6.vm.network  :private_network, :ip => '10.10.100.110'
     centos6.vm.hostname = 'centos6.puppetlabs.vm'
 
   # Configure CentOS6 VM Settings
   centos6.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name = "c6_ossec_pe2019.0.0"
-    settings.cpus = 1
+    settings.name   = "c6_ossec_pe2019.0.0"
+    settings.cpus   = 1
   end
 
   # Add all other hosts for environment
@@ -78,15 +78,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ################
   # Define the CentOS7 VM Characteristics
   config.vm.define 'centos7' do |centos7|
-    centos7.vm.box = 'centos/7'
-    centos7.vm.network :private_network, :ip => '10.10.100.111'
+    centos7.vm.box      = 'centos/7'
+    centos7.vm.network  :private_network, :ip => '10.10.100.111'
     centos7.vm.hostname = 'centos7.puppetlabs.vm'
 
   # Configure CentOS7 VM Settings
   centos7.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name = "c7_ossec_pe2019.0.0"
-    settings.cpus = 1
+    settings.name   = "c7_ossec_pe2019.0.0"
+    settings.cpus   = 1
   end
 
   # Add all other hosts for environment
@@ -110,15 +110,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ###############
   # Define the Trusty 14.04 VM Characteristics
   config.vm.define 'trusty' do |trusty|
-    trusty.vm.box = 'ubuntu/trusty64'
-    trusty.vm.network :private_network, :ip => '10.10.100.112'
+    trusty.vm.box      = 'ubuntu/trusty64'
+    trusty.vm.network  :private_network, :ip => '10.10.100.112'
     trusty.vm.hostname = 'trusty.puppetlabs.vm'
 
   # Configure Trusty VM Settings
   trusty.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name = "trusty_ossec_pe2019.0.0"
-    settings.cpus = 1
+    settings.name   = "trusty_ossec_pe2019.0.0"
+    settings.cpus   = 1
   end
 
   # Add all other hosts for environment
@@ -142,8 +142,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 ###############
   # Define the Xenial 16.04 VM Characteristics
   config.vm.define 'xenial' do |xenial|
-    xenial.vm.box = 'ubuntu/xenial64'
-    xenial.vm.network :private_network, :ip => '10.10.100.113'
+    xenial.vm.box      = 'ubuntu/xenial64'
+    xenial.vm.network  :private_network, :ip => '10.10.100.113'
     xenial.vm.hostname = 'xenial.puppetlabs.vm'
 
   # Configure Xenial VM Settings
