@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure Master VM Settings
   master.vm.provider :virtualbox do |settings|
     settings.memory = 4608
-    settings.name   = "master_2019.0.0"
+    settings.name   = "master_2019.0.1"
     settings.cpus   = 2
   end
 
@@ -53,7 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure CentOS6 VM Settings
   centos6.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name   = "c6_ossec_pe2019.0.0"
+    settings.name   = "c6_ossec_pe2019.0.1"
     settings.cpus   = 1
   end
 
@@ -85,7 +85,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure CentOS7 VM Settings
   centos7.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name   = "c7_ossec_pe2019.0.0"
+    settings.name   = "c7_ossec_pe2019.0.1"
     settings.cpus   = 1
   end
 
@@ -117,7 +117,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure Trusty VM Settings
   trusty.vm.provider :virtualbox do |settings|
     settings.memory = 1024
-    settings.name   = "trusty_ossec_pe2019.0.0"
+    settings.name   = "trusty_ossec_pe2019.0.1"
     settings.cpus   = 1
   end
 
@@ -149,7 +149,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Configure Xenial VM Settings
   xenial.vm.provision :hosts do |settings|
     settings.memory = 1024
-    settings.name   = "xenial_ossec_pe2019.0.0"
+    settings.name   = "xenial_ossec_pe2019.0.1"
     settings.cpu    = 1
   end
 
